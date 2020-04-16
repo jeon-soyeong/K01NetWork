@@ -14,7 +14,7 @@ public class MultiClient extends IConnectImpl {
 	public static void main(String[] args) {
 
 		try {
-			IConnectImpl ic = new IConnectImpl("kosmo", "1234");
+			IConnectImpl impl = new IConnectImpl("kosmo", "1234");
 			
 			String s_name = null;
 			System.out.println("이름을 입력하세요:");
@@ -32,11 +32,9 @@ public class MultiClient extends IConnectImpl {
 				String count = null;
 				while (rs.next()) {
 					count = rs.getString(1);
-					System.out.println(count);
 				}
 				if (!(count.equals("0"))) {// 중복일때
-					System.out.println(count);
-					System.out.println("이미 있는 접속자입니다. 다른 이름으로 접속하세요.");
+					System.out.println("이미 있는 접속자입니다.");
 					System.out.println("다른 이름을 입력하세요:");
 					continue;
 				}

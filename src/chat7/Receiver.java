@@ -28,7 +28,7 @@ public class Receiver extends Thread {
 		//소켓이 종료되면 while()문을 벗어나서 input스트림을 종료한다.
 		while (in != null) {
 			try {
-				System.out.println("Thread Receive : " + URLDecoder.decode(in.readLine(),"UTF-8"));
+				System.out.println(URLDecoder.decode(in.readLine(),"UTF-8"));
 			} catch (SocketException ne) {
 				System.out.println("SocketException 발생됨");
 				break;

@@ -78,10 +78,8 @@ public class MultiServer extends IConnectImpl {
 				 */
 				if (name.equals("")) {
 					it_out.println(URLEncoder.encode(msg, "UTF-8"));
-//					it_out.println(msg);
 				} else {
 					it_out.println(URLEncoder.encode("[" + name + "]:" + msg, "UTF-8"));
-//					it_out.println("[" + name + "]:" + msg);
 				}
 			} catch (Exception e) {
 				System.out.println("예외:" + e);
@@ -152,16 +150,16 @@ public class MultiServer extends IConnectImpl {
 						String msg2 = in.readLine();
 						msg2 = URLDecoder.decode(msg2, "UTF-8");
 
-						if (msg2.equals("x")==false) {
+						if (msg2.equals("x") == false) {
 							Iterator<String> it = clientMap.keySet().iterator();
 							while (it.hasNext()) {
 								toPerson = it.next();
 								PrintWriter oos = (PrintWriter) clientMap.get(toPerson);
 								if (toPerson.equalsIgnoreCase(id)) {
 									oos.println(URLEncoder.encode("귓속말 : " + msg2, "UTF-8"));
-									
-									String query = "INSERT INTO chating_tb VALUES (client_seq.nextval, ?, ?, to_char(sysdate, 'hh:mi'))";	
-									
+
+									String query = "INSERT INTO chating_tb VALUES (client_seq.nextval, ?, ?, to_char(sysdate, 'hh:mi'))";
+
 									psmt = con.prepareStatement(query);
 									psmt.setString(1, toPerson);
 									psmt.setString(2, msg2);
@@ -172,7 +170,7 @@ public class MultiServer extends IConnectImpl {
 							out.println("종료합니다.");
 							System.out.println("종료함");
 							break;
-							
+
 						}
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
@@ -183,7 +181,7 @@ public class MultiServer extends IConnectImpl {
 			else {// 일시
 				String id = s.substring(begin, end);
 				String msg = s.substring(end + 1);
-				
+
 				Iterator<String> it = clientMap.keySet().iterator();
 
 				String toPerson;
@@ -193,9 +191,9 @@ public class MultiServer extends IConnectImpl {
 						PrintWriter oos = clientMap.get(toPerson);
 						if (toPerson.equalsIgnoreCase(id)) {
 							oos.println(URLEncoder.encode("귓속말 : " + msg, "UTF-8"));
-							
-							String query = "INSERT INTO chating_tb VALUES (client_seq.nextval, ?, ?, to_char(sysdate, 'hh:mi'))";	
-							
+
+							String query = "INSERT INTO chating_tb VALUES (client_seq.nextval, ?, ?, to_char(sysdate, 'hh:mi'))";
+
 							psmt = con.prepareStatement(query);
 							psmt.setString(1, toPerson);
 							psmt.setString(2, msg);
@@ -216,11 +214,7 @@ public class MultiServer extends IConnectImpl {
 				out.println("[접속자 리스트] " + (i + 1) + "번째 접속자 : " + list.get(i));
 			}
 		}
-		
-		public void blockUser() {
-			
-		}
-		
+
 		@Override
 		public void run() {
 
@@ -231,13 +225,11 @@ public class MultiServer extends IConnectImpl {
 
 			try {
 				String query = "INSERT INTO chating_tb VALUES (client_seq.nextval, ?, ?, to_char(sysdate, 'hh:mi'))";
-				
 
 				// 클라이언트의 이름을 읽어와서 저장
 				name = in.readLine();
 
 				name = URLDecoder.decode(name, "UTF-8");
-				
 
 				// 접속한 클라이언트에게 새로운 사용자의 입장을 알림.
 				// 접속자를 제외한 나머지 클라이언트만 입장메세지를 받는다.
@@ -257,16 +249,12 @@ public class MultiServer extends IConnectImpl {
 
 					if (s == null)
 						break;
-					
 
 					if (s.charAt(0) == '/') {
 						if (s.substring(1, 5).equalsIgnoreCase("list"))
 							showList();
 						else if (s.substring(1, 3).equalsIgnoreCase("to")) {
 							secretMsg(s);
-						}
-						else if (s.substring(1, 6).equalsIgnoreCase("block")) {
-							blockUser(s);
 						}
 
 					} else {
